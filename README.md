@@ -10,7 +10,7 @@ Follow these simple steps to install and configure the Ads Manager system.
 2. Navigate to **File Manager**.
 3. Go to the **`public_html`** directory.
 4. Create a new folder: **`ads-manager`**.
-5. Upload **ALL files** from the provided ZIP archive into this folder.
+5. Upload **ALL files and folders** from the provided ZIP archive into this folder and extract.
 
 ---
 
