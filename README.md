@@ -16,12 +16,12 @@ Follow these simple steps to install and configure the Ads Manager system.
 
 ## 🗄️ Step 2: Prepare Database Credentials
 
-You will need the following information from **kimedata** (or your hosting provider):
+You will need the following information from **kimedata** database:
 
 - **Database Name**  
 - **Database Username**  
 - **Database Password**  
-- **Database Host** (usually `localhost`)
+- **Database Host** (usually `localhost` i guess)
 
 > 💡 Keep these credentials handy for the next step.
 
@@ -31,7 +31,7 @@ You will need the following information from **kimedata** (or your hosting provi
 
 1. Open your browser and visit:  
    **`https://kimedata.ng/ads-manager/`**  
-   (You Replace `yourdomain.com` with your actual domain if you choose to use it as well.)
+   (You can Replace `kimedata.ng` with your actual domain if you choose to use it as well.)
 
 2. You will see the **Setup Page** automatically appear.
 
