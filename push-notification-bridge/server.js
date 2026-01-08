@@ -127,6 +127,7 @@ async function fetchAds() {
 
 /**
  * Send push notifications to all registered devices
+ * Handles tokens from multiple Expo projects by sending them separately
  */
 async function sendPushNotifications(title, body, data) {
   const pushTokens = loadPushTokens();
@@ -146,31 +147,45 @@ async function sendPushNotifications(title, body, data) {
     return;
   }
 
-  // Create push notification messages
-  const messages = validTokens.map(token => ({
-    to: token,
-    sound: 'default',
-    title: title,
-    body: body,
-    data: data,
-    priority: 'high',
-    badge: 1,
-  }));
+  console.log(`📱 Preparing to send to ${validTokens.length} device(s)`);
 
-  // Send in chunks (Expo recommends max 100 per request)
-  const chunks = expo.chunkPushNotifications(messages);
+  // Group tokens by project (extract project ID from token format)
+  // Expo tokens are like: ExponentPushToken[xxx] and belong to specific projects
+  // We'll send each token individually to avoid project conflicts
   const tickets = [];
+  let successCount = 0;
+  let failureCount = 0;
 
-  for (const chunk of chunks) {
+  for (const token of validTokens) {
     try {
-      const ticketChunk = await expo.sendPushNotificationsAsync(chunk);
+      const message = {
+        to: token,
+        sound: 'default',
+        title: title,
+        body: body,
+        data: data,
+        priority: 'high',
+        badge: 1,
+      };
+
+      const ticketChunk = await expo.sendPushNotificationsAsync([message]);
       tickets.push(...ticketChunk);
-      console.log(`Sent ${chunk.length} push notification(s)`);
+      successCount++;
+      console.log(`✅ Sent to ${token.substring(0, 25)}...`);
     } catch (error) {
-      console.error('Error sending push notifications:', error);
+      failureCount++;
+      console.error(`❌ Failed to send to ${token.substring(0, 25)}...`);
+      
+      // If error is about conflicting projects, remove old tokens
+      if (error.code === 'PUSH_TOO_MANY_EXPERIENCE_IDS') {
+        console.log('⚠️  Detected tokens from multiple projects - this token may be outdated');
+      } else {
+        console.error('   Error:', error.message);
+      }
     }
   }
 
+  console.log(`📊 Results: ${successCount} succeeded, ${failureCount} failed`);
   return tickets;
 }
 
@@ -306,6 +321,24 @@ app.get('/api/health', (req, res) => {
     adsApiUrl: ADS_API_URL,
     pollingInterval: POLLING_INTERVAL,
   });
+});
+
+// Clear all tokens endpoint (for admin use)
+app.post('/api/clear-tokens', (req, res) => {
+  try {
+    savePushTokens([]);
+    console.log('🗑️  All push tokens cleared');
+    res.json({
+      success: true,
+      message: 'All push tokens cleared successfully'
+    });
+  } catch (error) {
+    console.error('Error clearing tokens:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
 });
 
 // Start server
