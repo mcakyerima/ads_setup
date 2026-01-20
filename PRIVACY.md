@@ -78,12 +78,13 @@ We may update this Privacy Policy from time to time. Changes will be posted in t
 
 For questions about this Privacy Policy, contact us at:
 - **Email:** support@kimedata.com
-- **Phone:** [Your phone number]
-- **Address:** [Your business address]
+- **Phone:** +2347012799299
+- **Address:** Opposite UMTH Borno State
 
 ---
 
 **Kimedata Mobile Services**  
 *Your trusted partner for mobile transactions in Nigeria*
+
 
 
