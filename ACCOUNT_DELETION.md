@@ -55,7 +55,7 @@ When you delete your account, the following data will be permanently removed:
 If you have questions about account deletion or data retention, contact us:
 
 - **Email:** support@kimedata.com
-- **Phone:** [Your support phone number]
+- **Phone:** +2347012799299
 
 ---
 
@@ -63,3 +63,4 @@ If you have questions about account deletion or data retention, contact us:
 *Your trusted partner for mobile transactions in Nigeria*
 
 Last updated: January 20, 2026
+
